@@ -1,15 +1,14 @@
 
 describe('Pruebas Módulo Admin', () => {
   let user;
-  let cantidadRegistros, cantidadRegistrosActualizados;
-
   beforeEach( () =>{
-      cy.login();
-      cy.contains('a', 'Admin').click();
-      cy.fixture('user').then((data)=> user = data);
-    }
-  ),
-  it('Agregar Usuario', () => {    
+    cy.login();
+    cy.contains('a', 'Admin').click();
+    cy.fixture('user').then((data)=> user = data);
+  }
+),
+it('Agregar Usuario', () => {    
+    let cantidadRegistros, cantidadRegistrosActualizados;
     cy.get('.oxd-table-card').its('length').then(
       (cantidad) => cantidadRegistros = cantidad
     );
@@ -45,11 +44,24 @@ describe('Pruebas Módulo Admin', () => {
     .find('span')                          
     .first()
     .click();
-    cy.get('.oxd-input').eq(1).type('{selectall}{backspace}').type(`${user.userName}12`); 
+    cy.get('.oxd-input').eq(1).type('{selectall}{backspace}').type(user.userName); 
     cy.contains('button[type="submit"]', 'Save').click();
   }),
 
   it('Eliminar usuario', () =>{
-    cy.get('.bi-trash').eq(0).click();
+    let cantidadRegistrosActuales, cantidadRegistrosActualizados;
+    cy.get('.oxd-table-card').its('length').then(
+      (cantidad) => cantidadRegistrosActuales = cantidad
+    );
+    cy.get('.bi-trash').eq(1).click();
+    cy.get('.oxd-button--label-danger',{timeout:7000});
+    cy.get('.oxd-button--label-danger').should('be.visible').click();
+    cy.get('.oxd-table-card',{timeout:8000});
+    cy.get('.oxd-table-card').its('length').then(
+      (cantidad) => {
+        cantidadRegistrosActualizados = cantidad;
+        expect(cantidadRegistrosActualizados).to.be.lessThan(cantidadRegistrosActuales)
+      }
+    );
   })
 });
