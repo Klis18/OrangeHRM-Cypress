@@ -63,5 +63,8 @@ it('Agregar Usuario', () => {
         expect(cantidadRegistrosActualizados).to.be.lessThan(cantidadRegistrosActuales)
       }
     );
+
+    cy.get('.oxd-userdropdown-icon').click();
+    cy.contains('a', 'Logout').click();
   })
 });
