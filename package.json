@@ -24,5 +24,8 @@
   "homepage": "https://github.com/Klis18/OrangeHRM-Cypress#readme",
   "devDependencies": {
     "cypress": "^14.5.0"
+  },
+  "dependencies": {
+    "uuid": "^11.1.0"
   }
 }

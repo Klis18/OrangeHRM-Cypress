@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 
 describe('Pruebas Módulo Admin', () => {
   let user;
@@ -9,6 +10,7 @@ describe('Pruebas Módulo Admin', () => {
 ),
 it('Agregar Usuario', () => {    
     let cantidadRegistros, cantidadRegistrosActualizados;
+    const userId = uuidv4().slice(0,4);
     cy.get('.oxd-table-card').its('length').then(
       (cantidad) => cantidadRegistros = cantidad
     );
@@ -23,7 +25,7 @@ it('Agregar Usuario', () => {
     .click();
     cy.get('.oxd-select-wrapper .oxd-select-text').eq(1).click();
     cy.get('.oxd-select-dropdown').contains('Enabled').click();
-    cy.get('.oxd-input').eq(1).type(user.userName);
+    cy.get('.oxd-input').eq(1).type(user.userName+userId);
     cy.get('input[type="password"]').eq(0).type(user.password);
     cy.get('input[type="password"]').eq(1).type(user.password);
     cy.contains('button[type="submit"]', 'Save').click();
