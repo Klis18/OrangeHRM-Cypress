@@ -16,7 +16,12 @@ describe('Pruebas en Recruitment', () =>{
         cy.get('.oxd-select-wrapper').contains('Junior Account Assistant').click();
         cy.get(':nth-child(3) > .oxd-grid-3 > :nth-child(1) > .oxd-input-group > :nth-child(2) > .oxd-input').type('prueba@email.com');
         cy.get('.oxd-grid-3 > :nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type('0998786785');
-        // cy.get('.oxd-file-input-div').contains('archivoprueba');
-
+        cy.fixture('docprueba.pdf', null).as('myFixture');
+        cy.get('.oxd-file-input').selectFile('@myFixture',{force : true});
+        cy.get('.orangehrm-save-candidate-page-full-width > .oxd-input-group > :nth-child(2) > .oxd-input').type('tag1,tag2,tag3');
+        cy.get('.oxd-date-input > .oxd-input').clear().type('2025-12-05');
+        cy.get('.oxd-textarea').type('Esta es una nota de prueba');
+        cy.get('.oxd-checkbox-input').click();
+        cy.get('button[type="submit"]').click();
     })
 })
