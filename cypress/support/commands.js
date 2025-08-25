@@ -29,4 +29,13 @@ Cypress.Commands.add('login', () =>{
     cy.get('input[name="username"]').type('Admin');
     cy.get('input[name="password"]').type('admin123');
     cy.get('.orangehrm-login-button').click();   
-})
+});
+
+export function randomString(length) {
+    const chars = 'abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+}
