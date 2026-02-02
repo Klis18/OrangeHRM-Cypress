@@ -13,4 +13,18 @@ describe('Pruebas en Recruitment', () =>{
            candidate.addCandidate(candidateData)
         });
     });
+
+    it('Editar Candidato', () => {
+        cy.fixture('candidate').then((candidateData) => {
+            candidate.searchCandidate(candidateData.firstName);
+            candidate.editCandidate();
+        })
+    });
+
+    it('Eliminar Candidato', () => {
+        cy.fixture('candidate').then((candidateData) => {
+            candidate.searchCandidate(candidateData.firstName);
+            candidate.deleteCandidate();
+        })
+    })
 })
