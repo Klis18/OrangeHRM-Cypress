@@ -1,47 +1,94 @@
 
 class Candidate{
 
-    addCandidate(candidate){
-        cy.contains('button','Add').click();
-        cy.get('.orangehrm-firstname',{timeout:5000}).type(candidate.firstName);
-        cy.get('.orangehrm-middlename').type(candidate.middleName);
-        cy.get('.orangehrm-lastname').type(candidate.lastName);
-        cy.get('.oxd-select-wrapper').click()
-        cy.get('.oxd-select-wrapper').contains(candidate.vacancy).click();
-        cy.get(':nth-child(3) > .oxd-grid-3 > :nth-child(1) > .oxd-input-group > :nth-child(2) > .oxd-input').type(candidate.email);
-        cy.get('.oxd-grid-3 > :nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type(candidate.contactNumber);
+    candidatesElements = {
+        firstNameInput:      () => cy.get('.orangehrm-firstname'),
+        middleNameInput:     () => cy.get('.orangehrm-middlename'),
+        lastNameInput:       () => cy.get('.orangehrm-lastname'),
+        wrapper:             () => cy.get('.oxd-select-wrapper'),
+        emailInput:          () => cy.get(':nth-child(3) > .oxd-grid-3 > :nth-child(1) > .oxd-input-group > :nth-child(2) > .oxd-input'),
+        contactNumberInput:  () => cy.get('.oxd-grid-3 > :nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input'),
+        resumeFileInput:     () => cy.get('.oxd-file-input'),
+        keywordsInput:       () => cy.get('input[placeholder="Enter comma seperated words..."]'),
+        dateApplicationInput:() => cy.get('.oxd-date-input > .oxd-input'),
+        notesInput:          () => cy.get('.oxd-textarea'),
+        consentCheckbox:     () => cy.get('.oxd-checkbox-input'),
+        submitButton:        () => cy.get('button[type="submit"]'),
+        candidateNameSearch: () => cy.get('input[placeholder="Type for hints..."]'),
+        addButton:           () => cy.contains('button','Add'),
+        editButton:          () => cy.get('button>i.oxd-icon.bi-eye-fill'),
+        deleteButton:        () => cy.get('button>i.oxd-icon.bi-trash'),
+        confirmButton:       () => cy.get('button').contains('Yes'),
+        searchButton:        () => cy.get('button').contains('Search'),
+        editSwitchInput:     () => cy.get('.oxd-switch-input'),
+        autocomplete:        () => cy.get('.oxd-autocomplete-dropdown')
+    }
+
+    add(){
+        this.candidatesElements.addButton().click();
+    }
+
+    edit(){
+        this.candidatesElements.editButton().first().click();
+    }
+
+    activateEdit(){
+        this.candidatesElements.editSwitchInput().click();
+    }
+
+    delete(){
+        this.candidatesElements.deleteButton().first().click();
+    }
+
+    confirmDelete(){
+        this.candidatesElements.confirmButton().click();
+    }
+
+    save(){
+        this.candidatesElements.submitButton().click();
+    }
+
+    search(){
+        this.candidatesElements.searchButton().click();
+    }
+
+    candidateForm(candidate){
+        this.candidatesElements.firstNameInput().type('{selectall}{backspace}').type(candidate.firstName);
+        this.candidatesElements.middleNameInput().type('{selectall}{backspace}').type(candidate.middleName);
+        this.candidatesElements.lastNameInput().type('{selectall}{backspace}').type(candidate.lastName);
+        this.candidatesElements.wrapper().click();
+        this.candidatesElements.wrapper().contains(candidate.vacancy).click();
+        this.candidatesElements.emailInput().type('{selectall}{backspace}').type(candidate.email);
+        this.candidatesElements.contactNumberInput().type('{selectall}{backspace}').type(candidate.contactNumber);
         cy.fixture(candidate.resume, null).as('myFixture');
-        cy.get('.oxd-file-input').selectFile('@myFixture',{force : true});
-        cy.get('.orangehrm-save-candidate-page-full-width > .oxd-input-group > :nth-child(2) > .oxd-input').type(candidate.keywords);
-        cy.get('.oxd-date-input > .oxd-input').clear().type(candidate.dateApplication);
-        cy.get('.oxd-textarea').type(candidate.notes);
-        cy.get('.oxd-checkbox-input').click();
-        cy.get('button[type="submit"]').click();
-        cy.contains('Success',{timeout:5000}).should('be.visible');
+        this.candidatesElements.resumeFileInput().selectFile('@myFixture',{force:true});
+        this.candidatesElements.keywordsInput().type('{selectall}{backspace}').type(candidate.keywords);
+        this.candidatesElements.dateApplicationInput().clear().type(candidate.dateApplication);
+        this.candidatesElements.notesInput().type(candidate.notes);
+        this.candidatesElements.consentCheckbox().click();    
     }
 
-    searchCandidate(candidateName){
-        cy.get('input[placeholder="Type for hints..."]').type(candidateName);
-        cy.get('.oxd-autocomplete-dropdown',{timeout:7000});
-        cy.get('.oxd-autocomplete-dropdown').should('be.visible')                  
-        .find('span')                          
-        .first()
-        .click();
-        cy.get('button').contains('Search').click();
+    candidateFilterByName(candidateName){
+        this.candidatesElements.candidateNameSearch().type(candidateName);
+        this.candidatesElements.autocomplete().should('be.visible').find('span').first().click();
     }
 
-    editCandidate(){
-        cy.get('button>i.oxd-icon.bi-eye-fill').click();
-        cy.get('span.oxd-switch-input').click();
-        cy.get('input[name="middleName"]').type('{selectall}{backspace}').type('Belinda');
-        cy.get('button').contains('Save').click();
-        cy.get('p.oxd-text').contains('Belinda').should('be.visible');
-    }
 
-    deleteCandidate(){
-        cy.get('button>i.oxd-icon.bi-trash').click();
-        cy.get('button').contains('Yes').click();
-    }
+    // searchCandidate(candidateName){
+    //     cy.get('input[placeholder="Type for hints..."]').type(candidateName);
+    //     cy.get('.oxd-autocomplete-dropdown',{timeout:7000});
+    //     cy.get('.oxd-autocomplete-dropdown').should('be.visible')                  
+    //     .find('span')                          
+    //     .first()
+    //     .click();
+    //     cy.get('button').contains('Search').click();
+    // }
+
+
+    // deleteCandidate(){
+    //     cy.get('button>i.oxd-icon.bi-trash').click();
+    //     cy.get('button').contains('Yes').click();
+    // }
 }
 
 export const candidate = new Candidate();
