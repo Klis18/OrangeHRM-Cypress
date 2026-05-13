@@ -1,24 +1,24 @@
-import { userManagement } from '../../../pages/Admin/UserManagement/UserManagement';
+import { userManagement } from '../../../pages/Admin/UserManagement/Users';
 
-describe('Pruebas Módulo Admin', () => {
+describe('Admin Module tests', () => {
   beforeEach( () =>{
     cy.login();
     cy.redirectTo('admin/viewSystemUsers');
   }
 ),
-  it('Agregar Usuario', () => {   
+  it('Add User', () => {   
     cy.fixture('user').then((userData) => {
       userManagement.addUser(userData);
     })
   }),
 
-  it('Editar Usuario', () => {
+  it('Edit User', () => {
     cy.fixture('user').then((userData) => {
       userManagement.editUser(userData);
     })
   }),
 
-  it('Eliminar usuario', () =>{
+  it('Delete User', () =>{
     userManagement.deleteUser();
   })
 });

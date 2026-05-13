@@ -1,14 +1,14 @@
 import 'cypress-file-upload';
 import { vacancies } from '../../pages/Recruitment/Vacancies';
 
-describe('Pruebas en Recruitment', () =>{
+describe('Tests in Recruitment Submodule Vacancies Option', () =>{
     beforeEach( () =>{
             cy.login();
             cy.redirectTo('recruitment/viewCandidates');
         }
     ),
 
-    it('Agregar Vacante', ()=>{
+    it('Add Vacancy', ()=>{
         cy.fixture('vacancies').then((vacancy) => {
             vacancies.addVacancy(vacancy)
         });

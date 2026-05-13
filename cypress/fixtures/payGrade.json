@@ -1,0 +1,6 @@
+{
+    "name":"Grade f",
+    "currency": "USD",
+    "minSalary":"475",
+    "maxSalary":"1500"
+}

@@ -73,22 +73,6 @@ class Candidate{
         this.candidatesElements.autocomplete().should('be.visible').find('span').first().click();
     }
 
-
-    // searchCandidate(candidateName){
-    //     cy.get('input[placeholder="Type for hints..."]').type(candidateName);
-    //     cy.get('.oxd-autocomplete-dropdown',{timeout:7000});
-    //     cy.get('.oxd-autocomplete-dropdown').should('be.visible')                  
-    //     .find('span')                          
-    //     .first()
-    //     .click();
-    //     cy.get('button').contains('Search').click();
-    // }
-
-
-    // deleteCandidate(){
-    //     cy.get('button>i.oxd-icon.bi-trash').click();
-    //     cy.get('button').contains('Yes').click();
-    // }
 }
 
 export const candidate = new Candidate();
